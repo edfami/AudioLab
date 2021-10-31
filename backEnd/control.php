@@ -18,7 +18,7 @@ if (isset($_POST['login'])) {
     if($rows == 1){
         $_SESSION['email'] = $email;
 
-        header("Location: frontEnd/hola.html");
+        header("Location: ../frontEnd/static/index.php");
         
     }else{
         echo "<div class='form'>
