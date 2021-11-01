@@ -23,7 +23,7 @@ if (isset($_POST['login'])) {
     }else{
         echo "<div class='form'>
         <h3>Username/password is incorrect.</h3>
-        <br/>Click here to <a href='login.php'>Login</a></div>";
+        <br/>Click here to <a href='../index.html'>Login</a></div>";
     }
 }
 
