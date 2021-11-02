@@ -16,41 +16,46 @@ if(isset($_POST['registro'])){
     
     $pass = mysqli_real_escape_string($con, $pass);
     
-/*
-    $query1 = "SELECT * FROM usuario where usuario = $username, email = $email and password = '".md5($pass)."'";
-    echo "8";
+
+    $query1 = "SELECT * FROM usuario where usuario = $username, email = $email and password = '".md5($pass)."', estado = 1";
+  
     $result1 = mysqli_query($con, $query1);
-    echo "9";
+    
     $rows1 = mysqli_num_rows($result1);
-    echo "10";
+  
 
-    if(!$rows1){
+    if($rows1 == 1){
 
-        $query2 = "INSERT INTO usuario (usuario, password, email, idRol, estado) value ('".$username."', '".md5($pass)."', '".$email."', 3, 1)";
-        echo "11";
-        $result2 = mysqli_query($con, $query2);
-        echo "12";
-        $rows2 = mysqli_num_rows($result2);
-        echo "13";
-        
-        if($rows2 == 1){
-            echo'<script type="text/javascript">
-            alert("Usuario registrado");window.location.href="../index.html";
-            </script>';
-            echo "14";
-        }
 
-    }else{
         echo'<script type="text/javascript">
             alert("El usuario ya existe");window.location.href="../index.html";
             </script>';
-            echo "15";
-    }*/
-    
+
+        
+    }else{
+
+        $query2 = "INSERT INTO usuario (usuario, password, email, idRol, estado) value ('".$username."', '".md5($pass)."', '".$email."', 3, 1)";
+  
+        $result2 = mysqli_query($con, $query2);
+
+        $rows2 = mysqli_num_rows($result2);
+ 
+        
+        if($rows2 >= 1){
+            echo'<script type="text/javascript">
+            alert("Usuario registrado");window.location.href="../index.html";
+            </script>';
+         
+        }
+
+        
+
+    }
+    /*
     $query1 = "SELECT * FROM usuario WHERE usuario = '".$username."', password = '".md5($pass)."', email = '".$email."'";
 
     $stmt = $con->prepare($query1);
-    $stmt->bind_param("s", $email);
+    $stmt->bind_param(":email", $email);
     $stmt->execute();
     $result1 = $smt->get_result();
     $stmt->close();
@@ -61,7 +66,8 @@ if(isset($_POST['registro'])){
     }else{
         $query2 = "INSERT INTO usuario (usuario, password, email, idRol, estado) value ('".$username."', '".md5($pass)."', '".$email."', 2, 1)";
         $stmt = $con -> prepare($query2);
-        $stmt->bind_params("sss", $username, $pass, $email);
+        $stmt->bind_params(":email", $$email);
+
         $stmt->execute();
         $result = $stmt->affected_rows;
         $stmt->close();
@@ -71,5 +77,5 @@ if(isset($_POST['registro'])){
             window.location.href="../index.html";
             </script>';
 
-    }
+    }*/
 }

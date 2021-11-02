@@ -21,9 +21,10 @@ if (isset($_POST['login'])) {
         header("Location: ../frontEnd/static/index.php");
         
     }else{
-        echo "<div class='form'>
-        <h3>Username/password is incorrect.</h3>
-        <br/>Click here to <a href='../index.html'>Login</a></div>";
+        echo'<script type="text/javascript">
+            alert("El usuarioo la contraseña son incorrectos...");window.location.href="../index.html";
+            </script>';
+            echo "15";
     }
 }
 
