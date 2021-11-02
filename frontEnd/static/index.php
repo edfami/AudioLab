@@ -786,8 +786,66 @@ include('../../backEnd/conn.php');
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-                
+          <div class="row">
+          <div class="col-12">
+            <!-- Custom Tabs -->
+            <div class="card">            
+              <div class="card-body">
+                <div class="tab-content">
+                  <div class="tab-pane active" id="tab_1">
+                    <h3>Hola!!! <?php echo $_SESSION['email']; ?></h3>
+                    Bienvenido a AudioLab en donde podras ver a los doctores disponibles,
+                    y poder organizar y crear tus propias citas medicas sin necesidad de hacer filas.
+                  </div>                                
+                  <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+              </div><!-- /.card-body -->
+            </div>
+            <!-- ./card -->
+          </div>
+          <!-- /.col -->
+        </div>    
+      </div>
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <dv class="card-body">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"> 
+                  <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                  </ol>
+                  <div class="carousel-inner">
+                    <div class="col-sm-8" align="align-center">
+                      <div class="carousel-item active">
+                        <img class="d-block w-100" src="img/doc4.jpeg" alt="First slide">
+                      </div>                    
+                      <div class="carousel-item">
+                        <img class="d-block w-100" src="img/doc2.jpeg" alt="Second slide">
+                      </div>
+                      <div class="carousel-item">
+                        <img class="d-block w-100" src="img/doc4.jpeg" alt="Third slide">
+                      </div>
+                    </div>
+                  </div>
+                  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>                        
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
         <!-- /.row -->
         <!-- Main row -->
         <div class="row">
@@ -922,5 +980,7 @@ include('../../backEnd/conn.php');
 <script src="dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="dist/js/pages/dashboard.js"></script>
+<script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="../lib/bootstrap/js/util.js"></script>
 </body>
 </html>
