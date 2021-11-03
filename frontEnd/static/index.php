@@ -278,6 +278,7 @@ include('../../backEnd/conn.php');
         <div class="row">
           <!-- Left col -->
           <section class="col-lg-7 connectedSortable">
+          
             <div class="container-fluid">
               <div class="row">
                 <div class="col-12">
