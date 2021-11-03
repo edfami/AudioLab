@@ -179,13 +179,13 @@ include('../../backEnd/conn.php');
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="historial_list.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Historial Medico</p>
+                  <p>Historial Medico Lista</p>
                 </a>
               </li>              
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="historial.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Crear Historial Medico</p>
                 </a>
@@ -193,7 +193,7 @@ include('../../backEnd/conn.php');
             </ul>
           </li>          
           <li class="nav-item">
-            <a href="pages/gallery.html" class="nav-link">
+            <a href="doctor" class="nav-link">
               <i class="nav-icon far fa-user"></i>
               <p>
                 Doctor
@@ -201,7 +201,7 @@ include('../../backEnd/conn.php');
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/gallery.html" class="nav-link">
+            <a href="paciente.php" class="nav-link">
               <i class="nav-icon far fa-user"></i>
               <p>
                 Paciente
@@ -209,7 +209,7 @@ include('../../backEnd/conn.php');
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/gallery.html" class="nav-link">
+            <a href="usuario.php" class="nav-link">
               <i class="nav-icon far fa-user"></i>
               <p>
                 Usuario
