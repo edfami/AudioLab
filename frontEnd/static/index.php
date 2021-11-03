@@ -162,22 +162,36 @@ include('../../backEnd/conn.php');
                with font-awesome or any other icon font library -->
           <li class="nav-header">Paginas</li>
           <li class="nav-item">
-            <a href="pages/calendar.html" class="nav-link">
+            <a href="cita.php" class="nav-link">
               <i class="nav-icon far fa-calendar-alt"></i>
               <p>
-                Citas
-                
+                Citas                
               </p>
             </a>
-          </li>
+          </li>          
           <li class="nav-item">
-            <a href="pages/gallery.html" class="nav-link">
-              <i class="nav-icon far fa-user"></i>
+            <a href="#" class="nav-link">
+              <i class="nav-icon far fa-id-badge"></i>
               <p>
-                Perfil
+                Historial Medica
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-          </li>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Historial Medico</p>
+                </a>
+              </li>              
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Crear Historial Medico</p>
+                </a>
+              </li>
+            </ul>
+          </li>          
           <li class="nav-item">
             <a href="pages/gallery.html" class="nav-link">
               <i class="nav-icon far fa-user"></i>
@@ -201,7 +215,7 @@ include('../../backEnd/conn.php');
                 Usuario
               </p>
             </a>
-          </li>
+          </li>                   
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
