@@ -289,6 +289,10 @@ include('../../backEnd/conn.php');
                     <td>Win 95+</td>
                     <td> 4</td>
                     <td>X</td>
+                    <td>X</td>
+                    <td>X</td>
+                    <td>X</td>
+                    <td>X</td>
                   </tr>                  
                   </tfoot>
                 </table>
@@ -335,7 +339,7 @@ include('../../backEnd/conn.php');
 <script>
   $(function () {
     $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "responsive": true, "lengthChange": true, "autoWidth": true,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
