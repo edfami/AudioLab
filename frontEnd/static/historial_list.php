@@ -248,7 +248,7 @@ include('../../backEnd/conn.php');
     WHERE historialmedica.estado = 1;";
 
     $resultado = mysqli_query($con, $query);
-    $rows = mysqli_num_rows($resultado);
+    $rows = mysqli_fetch_row($resultado);
 
     
     ?>
@@ -265,34 +265,39 @@ include('../../backEnd/conn.php');
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
-                  <tr>
-                    <th>hospital</th>
-                    <th>nombre paciente</th>
-                    <th>apellido paciente</th>
-                    <th>direccion</th>
-                    <th>telefono</th>
-                    <th>edad</th>
-                    <th>nombre doctor</th>
-                    <th>apellido doctor</th>
-                    <th>fecha cita</th>
-                    <th>sintoma</th>
-                    <th>medicina</th>
-                    <th>opciones</th>
-                  </tr>
+                  
+                    <td>hospital</td>
+                    <td>nombre paciente</td>
+                    <td>apellido paciente</td>
+                    <td>direccion</td>
+                    <td>telefono</td>
+                    <td>edad</td>
+                    <td>nombre doctor</td>
+                    <td>apellido doctor</td>
+                    <td>fecha cita</td>
+                    <td>sintoma</td>
+                    <td>medicina</td>
+                    <td>opciones</td>
+                  
                   </thead>
                   <tbody>
                   <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
-                    <td>X</td>
-                    <td>X</td>
-                    <td>X</td>
-                    <td>X</td>
+                      <?php
+                      while ($rows){                                          
+                      ?>
+                    <td><?php echo $rows[0];?></td>
+                    <td><?php echo $rows[1];?></td>
+                    <td><?php echo $rows[2];?></td>
+                    <td><?php echo $rows[3];?></td>
+                    <td><?php echo $rows[4];?></td>
+                    <td><?php echo $rows[5];?></td>
+                    <td><?php echo $rows[6];?></td>
+                    <td><?php echo $rows[7];?></td>
+                    <td><?php echo $rows[8];?></td>
+                    <td><?php echo $rows[9];?></td>
+                    <td><?php echo $rows[10];?></td>
+                    <td></td>
+                    <?php } ?>
                   </tr>                  
                   </tfoot>
                 </table>
