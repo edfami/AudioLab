@@ -29,11 +29,7 @@ include('../../backEnd/conn.php');
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
-  <script type="text/javascript">
-    function actualizar(){location.reload(true);}
-    //Función para actualizar cada 5 segundos(5000 milisegundos)
-    setInterval("actualizar()",5000000);
-  </script>
+  
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -230,7 +226,7 @@ include('../../backEnd/conn.php');
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
+            <h1 class="m-0">Listado de Historial Medico</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -242,82 +238,94 @@ include('../../backEnd/conn.php');
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
+    <?php
+
+    $query = "SELECT historialmedica.idHIstorial ,h.hospital, p.nombres,p.apellidos,p.direccion,p.telefono,p.edad, d.nombre,d.apellido, ultFechaCita, sintomas, m.nombre FROM `historialmedica` 
+    INNER JOIN hospital as h ON h.idHospital = historialmedica.idHospital 
+    INNER JOIN dotor AS d on d.idDoctor = historialmedica.idDoctor 
+    INNER JOIN paciente as p on p.idPaciente = historialmedica.idPaciente 
+    INNER join medicina as m on m.idMedicina = historialmedica.idMedicina 
+    WHERE historialmedica.estado = 1;";
+
+    //$resultado = mysqli_query($con, $query);
+    //$rows = mysqli_fetch_row($resultado);
+    $result = $con->query($query);
+
+    
+    ?>
 
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row">
-          <div class="col-12">
+          <div class="col-32">
             <!-- Custom Tabs -->
-            <div class="card">            
+            <div class="card">              
+              <!-- /.card-header -->
               <div class="card-body">
-                <div class="tab-content">
-                  <div class="tab-pane active" id="tab_1">
-                    <h3>Hola!!! <?php echo $_SESSION['email']; ?></h3>
-                    Bienvenido a AudioLab en donde podras ver a los doctores disponibles,
-                    y poder organizar y crear tus propias citas medicas sin necesidad de hacer filas.
-                  </div>                                
-                  <!-- /.tab-pane -->
-                </div>
-                <!-- /.tab-content -->
-              </div><!-- /.card-body -->
-            </div>
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  
+                    <th>hospital</th>
+                    <th>nombre paciente</th>
+                    <th>apellido paciente</th>
+                    <th>direccion</th>
+                    <th>telefono</th>
+                    <th>edad</th>
+                    <th>nombre doctor</th>
+                    <th>apellido doctor</th>
+                    <th>fecha cita</th>
+                    <th>sintoma</th>
+                    <th>medicina</th>
+                    <th>opciones</th>
+                  
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <?php
+
+                    if($result->num_rows>0){
+
+                      while($row = $result->fetch_assoc()){
+
+                        ?>
+                        <tr>
+                          <td><?php echo $row['hospital'];?></td>
+                          <td><?php echo $row['nombres'];?></td>
+                          <td><?php echo $row['apellidos'];?></td>
+                          <td><?php echo $row['direccion'];?></td>
+                          <td><?php echo $row['telefono'];?></td>
+                          <td><?php echo $row['edad'];?></td>
+                          <td><?php echo $row['nombre'];?></td>
+                          <td><?php echo $row['apellido'];?></td>
+                          <td><?php echo $row['ultFechaCita'];?></td>
+                          <td><?php echo $row['sintomas'];?></td>
+                          <td><?php echo $row['nombre'];?></td>
+                          <td><a class="btn btn-info" href="historial_list.php?id=<?php echo $row["idHIstorial"]; ?>" name="update">Edit</a>&nbsp;<a class="btn btn-danger" href="historialmedica.php?id=<?php echo $row["idHIstorial"];?>" name="delete">delete</a></td>
+
+                        </tr>
+
+
+                      <?php 
+
+                      }
+                    }  
+
+
+                     ?>                      
+                  </tr>                  
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>            
+            <!-- /.card -->
+
             <!-- ./card -->
           </div>
-          <!-- ./col -->
         </div>
-        <!-- /.row -->
-        <!-- Main row -->
-        <div class="row">
-          <!-- Left col -->
-          <section class="col-lg-7 connectedSortable">
-          
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-12">
-                  <div class="card">
-                    <dv class="card-body">
-                      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"> 
-                        <ol class="carousel-indicators">
-                          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                        </ol>
-                        <div class="carousel-inner">                         
-                            <div class="carousel-item active">
-                              <img class="d-block w-100" src="img/doc4.jpeg" alt="First slide">
-                            </div>                    
-                            <div class="carousel-item">
-                              <img class="d-block w-100" src="img/doc2.jpeg" alt="Second slide">
-                            </div>
-                            <div class="carousel-item">
-                              <img class="d-block w-100" src="img/doc4.jpeg" alt="Third slide">
-                            </div>                         
-                        </div>
-                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                          <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                          <span class="sr-only">Next</span>
-                        </a>
-                      </div>                        
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>          
-          </section>    
-        </div>  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="#">AudioLab</a>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 1.0.0
-    </div>
-  </footer>
+  
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -326,40 +334,82 @@ include('../../backEnd/conn.php');
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+<?php 
+
+if(isset($_POST['update'])){
+  $user_id = $_GET["idHIstorial"];
+
+  if(isset($_GET['idHIstorial'])){
+    $sql = "SELECT historialmedica.idHIstorial ,h.hospital, p.nombres,p.apellidos,p.direccion,p.telefono,p.edad, d.nombre,d.apellido, ultFechaCita, sintomas, m.nombre FROM `historialmedica` 
+    INNER JOIN hospital as h ON h.idHospital = historialmedica.idHospital 
+    INNER JOIN dotor AS d on d.idDoctor = historialmedica.idDoctor 
+    INNER JOIN paciente as p on p.idPaciente = historialmedica.idPaciente 
+    INNER join medicina as m on m.idMedicina = historialmedica.idMedicina 
+    WHERE historialmedica.estado = 1 AND historialmedica.idHIstorial = '$user_id';";
+
+    $result = $con->query($sql);
+
+    if($result->num_rows > 0){
+      while($row3 = $result->fetch_assoc()){
+        $nombreHospital = $row3['hospital'];
+        $nombreP = $row3['nombres'];
+        $apellidoP = $row3['apellidos'];
+        $direccion = $row3['direccion'];
+        $telefono = $row3['telefono'];
+        $edad = $row3['edad'];
+        $nombreD = $row3['nombre'];
+        $apeliidoD = $row3['apellido'];
+        $fechaCita = $row3['ultFechaCita'];
+        $sintoma = $row3['sintomas'];
+        $medicina = $row3['nombre'];        
+      }
+      ?>
+      
+      <?php
+    }
+  }
+}
+?>
 
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="plugins/jquery-ui/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button)
-</script>
 <!-- Bootstrap 4 -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- ChartJS -->
-<script src="plugins/chart.js/Chart.min.js"></script>
-<!-- Sparkline -->
-<script src="plugins/sparklines/sparkline.js"></script>
-<!-- JQVMap -->
-<script src="plugins/jqvmap/jquery.vmap.min.js"></script>
-<script src="plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="plugins/jquery-knob/jquery.knob.min.js"></script>
-<!-- daterangepicker -->
-<script src="plugins/moment/moment.min.js"></script>
-<script src="plugins/daterangepicker/daterangepicker.js"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-<!-- Summernote -->
-<script src="plugins/summernote/summernote-bs4.min.js"></script>
-<!-- overlayScrollbars -->
-<script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="plugins/jszip/jszip.min.js"></script>
+<script src="plugins/pdfmake/pdfmake.min.js"></script>
+<script src="plugins/pdfmake/vfs_fonts.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- AdminLTE App -->
-<script src="dist/js/adminlte.js"></script>
+<script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="dist/js/pages/dashboard.js"></script>
+<!-- Page specific script -->
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": true, "autoWidth": true,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+
 </body>
 </html>
