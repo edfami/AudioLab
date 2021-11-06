@@ -302,7 +302,10 @@ include('../../backEnd/conn.php');
                           <td><?php echo $row['ultFechaCita'];?></td>
                           <td><?php echo $row['sintomas'];?></td>
                           <td><?php echo $row['nombre'];?></td>
-                          <td><a class="btn btn-info" href="historial_list.php?id=<?php echo $row["idHIstorial"]; ?>" name="update">Edit</a>&nbsp;<a class="btn btn-danger" href="historialmedica.php?id=<?php echo $row["idHIstorial"];?>" name="delete">delete</a></td>
+                          <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                Launch demo modal
+                              </button>
+                            <a class="btn btn-info" href="historial_list.php?id=<?php echo $row["idHIstorial"]; ?>" name="update">Edit</a>&nbsp;<a class="btn btn-danger" href="historialmedica.php?id=<?php echo $row["idHIstorial"];?>" name="delete">delete</a></td>
 
                         </tr>
 
@@ -364,7 +367,25 @@ if(isset($_POST['update'])){
         $medicina = $row3['nombre'];        
       }
       ?>
-      
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+              </div>
+              <div class="modal-body">
+                ...
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
       <?php
     }
   }
@@ -393,6 +414,12 @@ if(isset($_POST['update'])){
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 <!-- Page specific script -->
+
+<script>
+  $('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
+</script>
 <script>
   $(function () {
     $("#example1").DataTable({
