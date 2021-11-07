@@ -305,8 +305,9 @@ include('../../backEnd/conn.php');
                         <td><?php echo $row['ultFechaCita']; ?></td>
                         <td><?php echo $row['sintomas']; ?></td>
                         <td><?php echo $row['nombre']; ?></td>
-                        <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            Launch demo modal</button>
+                        <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            Launch static backdrop modal
+                          </button>
                         </td>
                       </tr>
                       </tfoot>
@@ -314,11 +315,11 @@ include('../../backEnd/conn.php');
               <?php
                           }
                         } ?>
-                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                          <h5 class="modal-title" id="staticBackdropLabel">Editar historial del paciente</h5>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -326,110 +327,105 @@ include('../../backEnd/conn.php');
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary">Save changes</button>
+                          <button type="button" class="btn btn-primary">Understood</button>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <!-- /.card-body -->
               </div>
-              <!-- /.card -->
-
-              <!-- ./card -->
+              <!-- /.card-body -->
             </div>
+            <!-- /.card -->
+
+            <!-- ./card -->
           </div>
         </div>
-      </section>
-
-      <!-- Control Sidebar -->
-      <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-      </aside>
-      <!-- /.control-sidebar -->
     </div>
-    <!--modal-->
+    </section>
 
-    <?php
-
-    if (isset($_POST['update'])) {
-      $user_id = $_GET["idHIstorial"];
-
-      if (isset($_GET['idHIstorial'])) {
-        $sql = "SELECT historialmedica.idHIstorial ,h.hospital, p.nombres,p.apellidos,p.direccion,p.telefono,p.edad, d.nombre,d.apellido, ultFechaCita, sintomas, m.nombre FROM `historialmedica` 
-    INNER JOIN hospital as h ON h.idHospital = historialmedica.idHospital 
-    INNER JOIN dotor AS d on d.idDoctor = historialmedica.idDoctor 
-    INNER JOIN paciente as p on p.idPaciente = historialmedica.idPaciente 
-    INNER join medicina as m on m.idMedicina = historialmedica.idMedicina 
-    WHERE historialmedica.estado = 1 AND historialmedica.idHIstorial = '$user_id';";
-
-        $result = $con->query($sql);
-
-        if ($result->num_rows > 0) {
-          while ($row3 = $result->fetch_assoc()) {
-            $nombreHospital = $row3['hospital'];
-            $nombreP = $row3['nombres'];
-            $apellidoP = $row3['apellidos'];
-            $direccion = $row3['direccion'];
-            $telefono = $row3['telefono'];
-            $edad = $row3['edad'];
-            $nombreD = $row3['nombre'];
-            $apeliidoD = $row3['apellido'];
-            $fechaCita = $row3['ultFechaCita'];
-            $sintoma = $row3['sintomas'];
-            $medicina = $row3['nombre'];
-          }
-    ?>
-
-    <?php
-        }
-      }
-    }
-    ?>
-
-    <!-- jQuery -->
-    <script src="plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <!--<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <!-- DataTables  & Plugins -->
-    <script src="plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-    <script src="plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-    <script src="plugins/jszip/jszip.min.js"></script>
-    <script src="plugins/pdfmake/pdfmake.min.js"></script>
-    <script src="plugins/pdfmake/vfs_fonts.js"></script>
-    <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-    <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
-    <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="dist/js/adminlte.min.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="dist/js/demo.js"></script>
-    <!-- Page specific script -->
-    <script>
-      $(function() {
-        $("#example1").DataTable({
-          "responsive": true,
-          "lengthChange": true,
-          "autoWidth": true,
-          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        $('#example2').DataTable({
-          "paging": true,
-          "lengthChange": false,
-          "searching": true,
-          "ordering": true,
-          "info": true,
-          "autoWidth": false,
-          "responsive": true,
-        });
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+  <!-- jQuery -->
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <!--<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <!-- DataTables  & Plugins -->
+  <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+  <script src="plugins/jszip/jszip.min.js"></script>
+  <script src="plugins/pdfmake/pdfmake.min.js"></script>
+  <script src="plugins/pdfmake/vfs_fonts.js"></script>
+  <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+  <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
+  <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="dist/js/demo.js"></script>
+  <!-- Page specific script -->
+  <script>
+    $(function() {
+      $("#example1").DataTable({
+        "responsive": true,
+        "lengthChange": true,
+        "autoWidth": true,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+      $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
       });
-    </script>
+    });
+  </script>
 
 </body>
 
 </html>
+
+<?php
+
+if (isset($_POST['update'])) {
+  $user_id = $_GET["idHIstorial"];
+
+  if (isset($_GET['idHIstorial'])) {
+    $sql = "SELECT historialmedica.idHIstorial ,h.hospital, p.nombres,p.apellidos,p.direccion,p.telefono,p.edad, d.nombre,d.apellido, ultFechaCita, sintomas, m.nombre FROM `historialmedica` 
+                INNER JOIN hospital as h ON h.idHospital = historialmedica.idHospital 
+                INNER JOIN dotor AS d on d.idDoctor = historialmedica.idDoctor 
+                INNER JOIN paciente as p on p.idPaciente = historialmedica.idPaciente 
+                INNER join medicina as m on m.idMedicina = historialmedica.idMedicina 
+                WHERE historialmedica.estado = 1 AND historialmedica.idHIstorial = '$user_id';";
+    $result = $con->query($sql);
+
+    if ($result->num_rows > 0) {
+      while ($row3 = $result->fetch_assoc()) {
+        $nombreHospital = $row3['hospital'];
+        $nombreP = $row3['nombres'];
+        $apellidoP = $row3['apellidos'];
+        $direccion = $row3['direccion'];
+        $telefono = $row3['telefono'];
+        $edad = $row3['edad'];
+        $nombreD = $row3['nombre'];
+        $apeliidoD = $row3['apellido'];
+        $fechaCita = $row3['ultFechaCita'];
+        $sintoma = $row3['sintomas'];
+        $medicina = $row3['nombre'];
+      }
+    }
+  }
+}
+?>
