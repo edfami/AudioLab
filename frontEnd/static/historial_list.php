@@ -266,7 +266,7 @@ include('../../backEnd/conn.php');
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
-                  
+                    <th>id</th>                  
                     <th>hospital</th>
                     <th>nombre paciente</th>
                     <th>apellido paciente</th>
@@ -291,6 +291,7 @@ include('../../backEnd/conn.php');
 
                         ?>
                         <tr>
+                          <td><?php echo $row['idHIstorial']?></td>
                           <td><?php echo $row['hospital'];?></td>
                           <td><?php echo $row['nombres'];?></td>
                           <td><?php echo $row['apellidos'];?></td>
@@ -302,10 +303,9 @@ include('../../backEnd/conn.php');
                           <td><?php echo $row['ultFechaCita'];?></td>
                           <td><?php echo $row['sintomas'];?></td>
                           <td><?php echo $row['nombre'];?></td>
-                          <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                Launch demo modal
-                              </button>
-                            <a class="btn btn-info" href="historial_list.php?id=<?php echo $row["idHIstorial"]; ?>" name="update">Edit</a>&nbsp;<a class="btn btn-danger" href="historialmedica.php?id=<?php echo $row["idHIstorial"];?>" name="delete">delete</a></td>
+                          <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#miModal">Modal</button>
+                            <a class="btn btn-info" href="historial_list.php?id=<?php echo $row["idHIstorial"]; ?>" name="">Edit</a>&nbsp;
+                            <a class="btn btn-danger" href="historialmedica.php?id=<?php echo $row["idHIstorial"];?>" name="delete">delete</a></td>
 
                         </tr>
 
@@ -320,6 +320,10 @@ include('../../backEnd/conn.php');
                   </tr>                  
                   </tfoot>
                 </table>
+                <div class="modal fade" id="#miModal" tabindex="-1" aria-hidden="true" aria-labelledby="modalTitle">
+                    <div class="modal-dialog"></div>
+                </div>
+
               </div>
               <!-- /.card-body -->
             </div>            
@@ -336,7 +340,8 @@ include('../../backEnd/conn.php');
   </aside>
   <!-- /.control-sidebar -->
 </div>
-<!-- ./wrapper -->
+<!--modal-->
+
 <?php 
 
 if(isset($_POST['update'])){
@@ -367,25 +372,7 @@ if(isset($_POST['update'])){
         $medicina = $row3['nombre'];        
       }
       ?>
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-              </div>
-              <div class="modal-body">
-                ...
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        
       <?php
     }
   }
@@ -395,7 +382,9 @@ if(isset($_POST['update'])){
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!--<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <!-- DataTables  & Plugins -->
 <script src="plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -414,12 +403,6 @@ if(isset($_POST['update'])){
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 <!-- Page specific script -->
-
-<script>
-  $('#myModal').on('shown.bs.modal', function () {
-  $('#myInput').trigger('focus')
-})
-</script>
 <script>
   $(function () {
     $("#example1").DataTable({
