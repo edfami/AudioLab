@@ -282,48 +282,37 @@ include('../../backEnd/conn.php');
                   
                   </thead>
                   <tbody>
-                  <tr>
-                    <?php
+                    <tr>
+                      <?php
 
-                    if($result->num_rows>0){
+                      if($result->num_rows>0){
 
-                      while($row = $result->fetch_assoc()){
+                        while($row = $result->fetch_assoc()){
 
-                        ?>
-                        <tr>
-                          <td><?php echo $row['idHIstorial']?></td>
-                          <td><?php echo $row['hospital'];?></td>
-                          <td><?php echo $row['nombres'];?></td>
-                          <td><?php echo $row['apellidos'];?></td>
-                          <td><?php echo $row['direccion'];?></td>
-                          <td><?php echo $row['telefono'];?></td>
-                          <td><?php echo $row['edad'];?></td>
-                          <td><?php echo $row['nombre'];?></td>
-                          <td><?php echo $row['apellido'];?></td>
-                          <td><?php echo $row['ultFechaCita'];?></td>
-                          <td><?php echo $row['sintomas'];?></td>
-                          <td><?php echo $row['nombre'];?></td>
-                          <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#miModal">Modal</button>
-                            <a class="btn btn-info" href="historial_list.php?id=<?php echo $row["idHIstorial"]; ?>" name="">Edit</a>&nbsp;
-                            <a class="btn btn-danger" href="historialmedica.php?id=<?php echo $row["idHIstorial"];?>" name="delete">delete</a></td>
-
-                        </tr>
-
-
-                      <?php 
-
-                      }
-                    }  
-
-
-                     ?>                      
-                  </tr>                  
+                          ?>
+                          <tr>
+                            <td><?php echo $row['idHIstorial']?></td>
+                            <td><?php echo $row['hospital'];?></td>
+                            <td><?php echo $row['nombres'];?></td>
+                            <td><?php echo $row['apellidos'];?></td>
+                            <td><?php echo $row['direccion'];?></td>
+                            <td><?php echo $row['telefono'];?></td>
+                            <td><?php echo $row['edad'];?></td>
+                            <td><?php echo $row['nombre'];?></td>
+                            <td><?php echo $row['apellido'];?></td>
+                            <td><?php echo $row['ultFechaCita'];?></td>
+                            <td><?php echo $row['sintomas'];?></td>
+                            <td><?php echo $row['nombre'];?></td>
+                            <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                              Launch demo modal</button>
+                            </td>                                          
+                          </tr>                  
                   </tfoot>
                 </table>
-                <div class="modal fade" id="#miModal" tabindex="-1" aria-hidden="true" aria-labelledby="modalTitle">
-                    <div class="modal-dialog"></div>
-                </div>
-
+                <?php 
+                      }
+                    }?>
+                
               </div>
               <!-- /.card-body -->
             </div>            
@@ -332,7 +321,8 @@ include('../../backEnd/conn.php');
             <!-- ./card -->
           </div>
         </div>
-  
+      </div>
+    </section>
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
