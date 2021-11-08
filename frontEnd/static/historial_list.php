@@ -295,61 +295,6 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-<?php 
-
-if(isset($_POST['update'])){
-  $user_id = $_GET["idHIstorial"];
-
-  if(isset($_GET['idHIstorial'])){
-    $sql = "SELECT historialmedica.idHIstorial ,h.hospital, p.nombres,p.apellidos,p.direccion,p.telefono,p.edad, d.nombre,d.apellido, ultFechaCita, sintomas, m.nombre FROM `historialmedica` 
-    INNER JOIN hospital as h ON h.idHospital = historialmedica.idHospital 
-    INNER JOIN dotor AS d on d.idDoctor = historialmedica.idDoctor 
-    INNER JOIN paciente as p on p.idPaciente = historialmedica.idPaciente 
-    INNER join medicina as m on m.idMedicina = historialmedica.idMedicina 
-    WHERE historialmedica.estado = 1 AND historialmedica.idHIstorial = '$user_id';";
-
-    $result = $con->query($sql);
-
-    if($result->num_rows > 0){
-      while($row3 = $result->fetch_assoc()){
-        $nombreHospital = $row3['hospital'];
-        $nombreP = $row3['nombres'];
-        $apellidoP = $row3['apellidos'];
-        $direccion = $row3['direccion'];
-        $telefono = $row3['telefono'];
-        $edad = $row3['edad'];
-        $nombreD = $row3['nombre'];
-        $apeliidoD = $row3['apellido'];
-        $fechaCita = $row3['ultFechaCita'];
-        $sintoma = $row3['sintomas'];
-        $medicina = $row3['nombre'];        
-      }
-      ?>
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-              </div>
-              <div class="modal-body">
-                ...
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      <?php
-    }
-  }
-}
-?>
-
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
@@ -372,12 +317,6 @@ if(isset($_POST['update'])){
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 <!-- Page specific script -->
-
-<script>
-  $('#myModal').on('shown.bs.modal', function () {
-  $('#myInput').trigger('focus')
-})
-</script>
 <script>
   $(function () {
     $("#example1").DataTable({
