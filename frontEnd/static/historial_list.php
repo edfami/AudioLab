@@ -3,7 +3,7 @@ include_once '../../backEnd/conn.php';
 include_once '../../backEnd/auth.php';
 $objeto = new Conexion();
 $conexion = $objeto->Conectar();
-$query = "SELECT historialmedica.idHIstorial ,h.hospital, p.nombres,p.apellidos,p.direccion,p.telefono,p.edad, d.nombre,d.apellido, ultFechaCita, sintomas, m.nombre FROM `historialmedica` 
+$query = "SELECT historialmedica.idHIstorial ,h.hospital, p.nombres,p.apellidos,p.direccion,p.telefono,p.edad, d.nombre,d.apellido, ultFechaCita, sintomas, m.nombreM FROM `historialmedica` 
 INNER JOIN hospital as h ON h.idHospital = historialmedica.idHospital 
 INNER JOIN dotor AS d on d.idDoctor = historialmedica.idDoctor 
 INNER JOIN paciente as p on p.idPaciente = historialmedica.idPaciente 
@@ -260,8 +260,15 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
                <tr>
                 <th>Hospital</th>
                 <th>Nombre Paciente</th>
-                <th>Apellido Paciente</th>                                
-                <th>Edad</th>  
+                <th>Apellido Paciente</th>
+                <th>Direcion</th>
+                <th>Telefono</th>                                
+                <th>Edad</th>
+                <th>Nombre Doctor</th>
+                <th>Apellido Doctor</th>
+                <th>Ultima Fecha de cita</th>
+                <th>Sintomas</th>
+                <th>Medicina</th>  
                 <th>Acciones</th>
                </tr>
               </thead>
@@ -270,10 +277,17 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
                 foreach($data as $dat) {                                                        
                ?>
                <tr>
-                 <td><?php echo $dat['id'] ?></td>
-                 <td><?php echo $dat['nombre'] ?></td>
-                 <td><?php echo $dat['pais'] ?></td>
+                 <td><?php echo $dat['hospital'] ?></td>
+                 <td><?php echo $dat['nombres'] ?></td>
+                 <td><?php echo $dat['apellidos'] ?></td>
+                 <td><?php echo $dat['direccion'] ?></td>
+                 <td><?php echo $dat['telefono'] ?></td>
                  <td><?php echo $dat['edad'] ?></td>    
+                 <td><?php echo $dat['nombre'] ?></td>
+                 <td><?php echo $dat['apellido'] ?></td>
+                 <td><?php echo $dat['ultFechaCita'] ?></td>
+                 <td><?php echo $dat['sintomas'] ?></td>                 
+                 <td><?php echo $dat['nombreM'] ?></td>
                  <td></td>
                </tr>
                <?php
