@@ -1,6 +1,17 @@
 <?php 
-include('../../backEnd/auth.php');
-include('../../backEnd/conn.php');
+include_once '../../backEnd/conn.php';
+include_once '../../backEnd/auth.php';
+$objeto = new Conexion();
+$conexion = $objeto->Conectar();
+$query = "SELECT historialmedica.idHIstorial ,h.hospital, p.nombres,p.apellidos,p.direccion,p.telefono,p.edad, d.nombre,d.apellido, ultFechaCita, sintomas, m.nombre FROM `historialmedica` 
+INNER JOIN hospital as h ON h.idHospital = historialmedica.idHospital 
+INNER JOIN dotor AS d on d.idDoctor = historialmedica.idDoctor 
+INNER JOIN paciente as p on p.idPaciente = historialmedica.idPaciente 
+INNER join medicina as m on m.idMedicina = historialmedica.idMedicina 
+WHERE historialmedica.estado = 1;";
+$resultado = $conexion->prepare($query);
+$resultado->execute();
+$data = $resultado->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -219,14 +230,13 @@ include('../../backEnd/conn.php');
     <!-- /.sidebar -->
   </aside>
 
- <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Listado de Historial Medico</h1>
+            <h1 class="m-0">Dashboard</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -238,98 +248,46 @@ include('../../backEnd/conn.php');
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-    <?php
-
-    $query = "SELECT historialmedica.idHIstorial ,h.hospital, p.nombres,p.apellidos,p.direccion,p.telefono,p.edad, d.nombre,d.apellido, ultFechaCita, sintomas, m.nombre FROM `historialmedica` 
-    INNER JOIN hospital as h ON h.idHospital = historialmedica.idHospital 
-    INNER JOIN dotor AS d on d.idDoctor = historialmedica.idDoctor 
-    INNER JOIN paciente as p on p.idPaciente = historialmedica.idPaciente 
-    INNER join medicina as m on m.idMedicina = historialmedica.idMedicina 
-    WHERE historialmedica.estado = 1;";
-
-    //$resultado = mysqli_query($con, $query);
-    //$rows = mysqli_fetch_row($resultado);
-    $result = $con->query($query);
-
-    
-    ?>
 
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
         <div class="row">
-          <div class="col-32">
-            <!-- Custom Tabs -->
-            <div class="card">              
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                  
-                    <th>hospital</th>
-                    <th>nombre paciente</th>
-                    <th>apellido paciente</th>
-                    <th>direccion</th>
-                    <th>telefono</th>
-                    <th>edad</th>
-                    <th>nombre doctor</th>
-                    <th>apellido doctor</th>
-                    <th>fecha cita</th>
-                    <th>sintoma</th>
-                    <th>medicina</th>
-                    <th>opciones</th>
-                  
-                  </thead>
-                  <tbody>
-                  <tr>
-                    <?php
-
-                    if($result->num_rows>0){
-
-                      while($row = $result->fetch_assoc()){
-
-                        ?>
-                        <tr>
-                          <td><?php echo $row['hospital'];?></td>
-                          <td><?php echo $row['nombres'];?></td>
-                          <td><?php echo $row['apellidos'];?></td>
-                          <td><?php echo $row['direccion'];?></td>
-                          <td><?php echo $row['telefono'];?></td>
-                          <td><?php echo $row['edad'];?></td>
-                          <td><?php echo $row['nombre'];?></td>
-                          <td><?php echo $row['apellido'];?></td>
-                          <td><?php echo $row['ultFechaCita'];?></td>
-                          <td><?php echo $row['sintomas'];?></td>
-                          <td><?php echo $row['nombre'];?></td>
-                          <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                Launch demo modal
-                              </button>
-                            <a class="btn btn-info" href="historial_list.php?id=<?php echo $row["idHIstorial"]; ?>" name="update">Edit</a>&nbsp;<a class="btn btn-danger" href="historialmedica.php?id=<?php echo $row["idHIstorial"];?>" name="delete">delete</a></td>
-
-                        </tr>
-
-
-                      <?php 
-
-                      }
-                    }  
-
-
-                     ?>                      
-                  </tr>                  
-                  </tfoot>
-                </table>
-              </div>
-              <!-- /.card-body -->
-            </div>            
-            <!-- /.card -->
-
-            <!-- ./card -->
+          <div class="col-lg-12">
+            <div class="table-responsive">        
+             <table id="tablaPersonas" class="table table-striped table-bordered table-condensed" style="width:100%">
+              <thead class="text-center">
+               <tr>
+                <th>Hospital</th>
+                <th>Nombre Paciente</th>
+                <th>Apellido Paciente</th>                                
+                <th>Edad</th>  
+                <th>Acciones</th>
+               </tr>
+              </thead>
+              <tbody>
+               <?php                            
+                foreach($data as $dat) {                                                        
+               ?>
+               <tr>
+                 <td><?php echo $dat['id'] ?></td>
+                 <td><?php echo $dat['nombre'] ?></td>
+                 <td><?php echo $dat['pais'] ?></td>
+                 <td><?php echo $dat['edad'] ?></td>    
+                 <td></td>
+               </tr>
+               <?php
+                  }
+               ?>                                
+              </tbody>        
+            </table>                    
+           </div>
           </div>
-        </div>
-  
-
+        </div>            
+      </div><!-- /.container-fluid -->--
+    </section>
+    <!-- /.content -->
+  </div>
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->

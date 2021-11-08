@@ -1,11 +1,17 @@
 <?php
-// Enter your Host, username, password, database below.
-// I left password empty because i do not set password on localhost.
-$con = mysqli_connect("localhost","root","","clinica");
-// Check connection
-if (mysqli_connect_errno())
-  {
-  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+class Conexion{	  
+  public static function Conectar() {        
+      define('servidor', 'localhost');
+      define('nombre_bd', 'clinica');
+      define('usuario', 'root');
+      define('password', '');					        
+      $opciones = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');			
+      try{
+          $conexion = new PDO("mysql:host=".servidor."; dbname=".nombre_bd, usuario, password, $opciones);			
+          return $conexion;
+      }catch (Exception $e){
+          die("El error de Conexión es: ". $e->getMessage());
+      }
   }
-?>
+}
 ?>
