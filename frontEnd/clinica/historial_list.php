@@ -396,7 +396,7 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
                   $resul->execute();
                   $data2 = $resul->fetchAll(PDO::FETCH_ASSOC);                 
                 ?>
-                <select name='doctor'>
+                <select name='medicina'>
                   <option value=''>Elegir Medicina</option>
                   <?PHP
                     foreach($data2 as $dat2){
