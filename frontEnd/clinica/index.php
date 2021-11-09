@@ -125,7 +125,7 @@ include('../../backEnd/conn.php');
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="index.php" class="brand-link">
       <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">AudioLAb</span>
     </a>
@@ -139,7 +139,7 @@ include('../../backEnd/conn.php');
 
         </div>
         <div class="info">
-          <a href="#" class="d-block"><?php echo $_SESSION['email'];?></a>
+          <a href="#" class="d-block"><?php echo $_SESSION['usuario'];?></a>
         </div>
       </div>
 
@@ -254,7 +254,7 @@ include('../../backEnd/conn.php');
               <div class="card-body">
                 <div class="tab-content">
                   <div class="tab-pane active" id="tab_1">
-                    <h3>Hola!!! <?php echo $_SESSION['email']; ?></h3>
+                    <h3>Hola!!! <?php echo $_SESSION['usuario']; ?></h3>
                     Bienvenido a AudioLab en donde podras ver a los doctores disponibles,
                     y poder organizar y crear tus propias citas medicas sin necesidad de hacer filas.
                   </div>                                

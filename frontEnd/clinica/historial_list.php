@@ -3,12 +3,13 @@ include_once '../../backEnd/conn.php';
 include_once '../../backEnd/auth.php';
 $objeto = new Conexion();
 $conexion = $objeto->Conectar();
-$query = "SELECT historialmedica.idHIstorial ,h.hospital, p.nombres,p.apellidos,p.direccion,p.telefono,p.edad, d.nombre,d.apellido, ultFechaCita, sintomas, m.nombreM FROM `historialmedica` 
+$query = "SELECT historialmedica.idHIstorial ,h.hospital, p.nombres,p.apellidos,p.direccion,p.telefono,p.edad, p.tipo_sangre, p.DUI,d.nombre,d.apellido, ultFechaCita, sintomas, m.nombreM FROM `historialmedica` 
 INNER JOIN hospital as h ON h.idHospital = historialmedica.idHospital 
 INNER JOIN dotor AS d on d.idDoctor = historialmedica.idDoctor 
 INNER JOIN paciente as p on p.idPaciente = historialmedica.idPaciente 
 INNER join medicina as m on m.idMedicina = historialmedica.idMedicina 
-WHERE historialmedica.estado = 1;";
+WHERE historialmedica.estado = 1;
+";
 $resultado = $conexion->prepare($query);
 $resultado->execute();
 $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
@@ -139,7 +140,7 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="index.php" class="brand-link">
       <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">AudioLAb</span>
     </a>
@@ -153,7 +154,7 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
 
         </div>
         <div class="info">
-          <a href="#" class="d-block"><?php echo $_SESSION['email'];?></a>
+          <a href="#" class="d-block"><?php echo $_SESSION['usuario'];?></a>
         </div>
       </div>
 
@@ -271,6 +272,8 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
                 <th>Direcion</th>
                 <th>Telefono</th>                                
                 <th>Edad</th>
+                <th>Tipo de Sangre</th>
+                <th>DUI</th>
                 <th>Nombre Doctor</th>
                 <th>Apellido Doctor</th>
                 <th>Ultima Fecha de cita</th>
@@ -289,7 +292,9 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
                  <td><?php echo $dat['apellidos'] ?></td>
                  <td><?php echo $dat['direccion'] ?></td>
                  <td><?php echo $dat['telefono'] ?></td>
-                 <td><?php echo $dat['edad'] ?></td>    
+                 <td><?php echo $dat['edad'] ?></td>
+                 <td><?php echo $dat['tipo_sangre'] ?></td>
+                 <td><?php echo $dat['DUI'] ?></td>   
                  <td><?php echo $dat['nombre'] ?></td>
                  <td><?php echo $dat['apellido'] ?></td>
                  <td><?php echo $dat['ultFechaCita'] ?></td>
