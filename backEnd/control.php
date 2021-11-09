@@ -20,21 +20,41 @@ if (isset($_POST['login'])) {
             $count = $stmt->rowCount();
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if($count == 1 && !empty($row)){
+            if($count == 1 && $row >= 1){
+                $_SESSION['email'] = $row['email'];
+                $_SESSION['usuario'] = $row['usuario'];
+                $_SESSION['id'] = $row['idUsuario'];
+                
+                echo'<script type="text/javascript">
+                    alert("Bienvenido");window.location.href="../frontEnd/clinica/index.php";
+                    </script>';
+        
+                //header("Location: ../frontEnd/clinica/index.php");
+                
+            }else{
+                echo'<script type="text/javascript">
+                    alert("El usuario y la contraseña son incorrectos...");window.location.href="../index.html";
+                    </script>';
+                    
+            }
+
+            /*if($count == 1 && !empty($row)){
+
+                header('Location:../frontEnd/clinica/historial_list.php');
+                exit();
+                
                 $_SESSION['sess_user_id'] = $row['idUsuario'];
                 $_SESSION['sess_user_name'] = $row['usuario'];
                 $_SESSION['sess_email'] = $row['email'];
 
-                header("Location: ../frontEnd/clinica/index.php");
-                //echo'<script type="text/javascript">
-            //alert("El usuario es correcto");window.location.href="../frontEnd/static/index.php";
-            //</script>';
+                
+                
             }else{
                 echo'<script type="text/javascript">
             alert("El usuarioo la contraseña son incorrectos...");window.location.href="../index.html";
             </script>';
          
-            }
+            }*/
         } catch (PDOException $e) {
             echo "Error : ".$e->getMessage();
         }
