@@ -20,6 +20,13 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AudioLAb</title>
 
+  <!--Datable css basico-->
+  <link rel="stylesheet" href="crud/datatables/datatables.min.css">
+  <link rel="stylesheet" href="crud/datatables/DataTables-1.10.18/css/dataTables.bootstrap.min.css">
+  <!--main css-->
+  <link rel="styleshhet" href="crud/main.css">
+  <!--bootstrap-->
+  <link rel="stylesheet" href="crud/bootstrap/css/bootstrap.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -313,26 +320,13 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- DataTables  & Plugins -->
-<script src="plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<script src="plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-<script src="plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-<script src="plugins/jszip/jszip.min.js"></script>
-<script src="plugins/pdfmake/pdfmake.min.js"></script>
-<script src="plugins/pdfmake/vfs_fonts.js"></script>
-<script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-<script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
-<script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 <!-- Page specific script -->
 <script>
-  $(function () {
+  /*$(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": true, "autoWidth": true,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
@@ -346,8 +340,16 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
       "autoWidth": false,
       "responsive": true,
     });
-  });
+  });*/
 </script>
+<!-- jQuery, Popper.js, Bootstrap JS -->
+<script src="crud/jquery/jquery-3.3.1.min.js"></script>
+<script src="crud/popper/popper.min.js"></script>
+<script src="crud/bootstrap/js/bootstrap.min.js"></script>
+<!-- datatables JS -->
+<script type="text/javascript" src="crud/datatables/datatables.min.js"></script>       
+<script type="text/javascript" src="crud/main.js"></script>  
+    
 
 </body>
 </html>
