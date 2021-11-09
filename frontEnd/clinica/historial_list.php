@@ -258,7 +258,7 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content">   
       <div class="container-fluid">
         <div class="row">
           <div class="col-lg-12">
@@ -266,6 +266,7 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
              <table id="tablaPersonas" class="table table-striped table-bordered table-condensed" style="width:100%">
               <thead class="text-center">
                <tr>
+                <th>id</th> 
                 <th>Hospital</th>
                 <th>Nombre Paciente</th>
                 <th>Apellido Paciente</th>
@@ -287,6 +288,7 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
                 foreach($data as $dat) {                                                        
                ?>
                <tr>
+                 <td><?php echo $dat['idHIstorial'] ?></td>
                  <td><?php echo $dat['hospital'] ?></td>
                  <td><?php echo $dat['nombres'] ?></td>
                  <td><?php echo $dat['apellidos'] ?></td>
@@ -310,8 +312,110 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
            </div>
           </div>
         </div>            
-      </div><!-- /.container-fluid -->--
+      </div><!-- /.container-fluid -->
     </section>
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-label="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Editar Historial Medico</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="update.php" method="POST">
+            <div class="modal-body">
+              <input type="hidden" name="update_id" id="update_id">
+              <div class="form-group">
+                <label>Hospital:</label>
+                <input type="text" name="hospital" id="hospital" class="form-control" placeholder="" readonly>
+              </div>
+              <div class="form-group">
+                <label>Nombre Paciente:</label>
+                <input type="text" name="nombres" id="nombres" class="form-control" placeholder="" readonly>
+              </div>
+              <div class="form-group">
+                <label>Apellido Paciente:</label>
+                <input type="text" name="apellidos" id="apellidos" class="form-control" placeholder="" readonly>
+              </div>
+              <div class="form-group">
+                <label>direccion:</label>
+                <input type="text" name="direccion" id="direccion" class="form-control" placeholder="" readonly>
+              </div>
+              <div class="form-group">
+                <label>Telefono:</label>
+                <input type="number" name="telefono" id="telefono" class="form-control" placeholder="" readonly>
+              </div>
+              <div class="form-group">
+                <label>Edad:</label>
+                <input type="text" name="edad" id="edad" class="form-control" placeholder=""readonly>
+              </div>
+              <div class="form-group">
+                <label>Tipo de Sangre:</label>
+                <input type="text" name="tipo_sangre" id="tipo_sangre" class="form-control" placeholder="" readonly>
+              </div>
+              <div class="form-group">
+                <label>Dui:</label>
+                <input type="text" name="dui" id="dui" class="form-control" placeholder="" readonly>
+              </div>
+              <?php 
+              $query1 = "SELECT * FROM dotor";
+              $result = $conexion->prepare($query1);
+              $result->execute();
+              $data1 = $result->fetchAll(PDO::FETCH_ASSOC);
+
+              
+              ?>
+
+              <div class='form-group'>
+                <label>Doctor:</label>
+                <select name='doctor'>
+                <option value=''>Elegir Doctor</option>
+
+              <?php
+              foreach($data1 as $dat1){
+                 echo " <option value='".$dat1['idDoctor']."'>".$dat1['nombre']."</option>";
+                }
+                echo "</select>"
+
+                ?>
+              </div>                    
+              <div class="form-group">
+                <label>Fecha:</label>
+                <input type="timepicker" name="fecha" id="fecha" class="form-control" placeholder="">
+              </div><div class="form-group">
+                <label>Sintomas:</label>
+                <input type="text" name="sintomas" id="sintomas" class="form-control" placeholder="">
+              </div>
+              <div class="form-group">
+                <label>Medicina:</label>
+                <?php
+                  $query2 = "SELECT * FROM  medicina";
+                  $resul = $conexion->prepare($query2);
+                  $resul->execute();
+                  $data2 = $resul->fetchAll(PDO::FETCH_ASSOC);                 
+                ?>
+                <select name='doctor'>
+                  <option value=''>Elegir Medicina</option>
+                  <?PHP
+                    foreach($data2 as $dat2){
+
+                      echo "<option value='".$dat2['idMedicina']."'>".$dat2['nombreM']."";
+                    }
+                  ?>
+                </select>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="submit" name="updateHis" class="btn btn-primary">Guardar</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
     <!-- /.content -->
   </div>
   <!-- Control Sidebar -->
@@ -331,21 +435,67 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
 <script src="dist/js/demo.js"></script>
 <!-- Page specific script -->
 <script>
-  /*$(function () {
-    $("#example1").DataTable({
-      "responsive": true, "lengthChange": true, "autoWidth": true,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": true,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
+$(document).ready(function(){
+    tablaPersonas = $("#tablaPersonas").DataTable({
+       "columnDefs":[{
+        "targets": -1,
+        "data":null,
+        "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btnEditar'>Editar</button><button class='btn btn-danger btnBorrar'>Borrar</button></div></div>"  
+       }],
+        
+        //Para cambiar el lenguaje a español
+    "language": {
+            "lengthMenu": "Mostrar _MENU_ registros",
+            "zeroRecords": "No se encontraron resultados",
+            "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sSearch": "Buscar:",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast":"Último",
+                "sNext":"Siguiente",
+                "sPrevious": "Anterior"
+             },
+             "sProcessing":"Procesando...",
+        }
     });
-  });*/
+});  
+
+$(document).ready(function(){
+  $('.btnEditar').on('click', function(){
+    $('#editModal').modal('show');
+    $tr = $(this).closest('tr');
+    var data = $tr.children("td").map(function(){
+      return $(this).text();
+    }).get();
+
+    console.log(data);
+
+    $('#update_id').val(data[0]);
+    $("#hospital").val(data[1]);
+    $("#nombres").val(data[2]);
+    $("#apellidos").val(data[3]);
+    $("#direccion").val(data[4]);
+    $("#telefono").val(data[5]);
+    $("#edad").val(data[6]);
+    $("#tipo_sangre").val(data[7]);
+    $('#dui').val(data[8]);
+    $("#nombre").val(data[9]);
+    $("#apellido").val(data[10]);
+    $("#fecha").val(data[11]);
+    $("#sintomas").val(data[12]);
+    $("#medicina").val(data[13]);
+
+
+
+
+  });
+
+
+
+});
+
 </script>
 <!-- jQuery, Popper.js, Bootstrap JS -->
 <script src="crud/jquery/jquery-3.3.1.min.js"></script>
@@ -353,7 +503,7 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
 <script src="crud/bootstrap/js/bootstrap.min.js"></script>
 <!-- datatables JS -->
 <script type="text/javascript" src="crud/datatables/datatables.min.js"></script>       
-<script type="text/javascript" src="crud/main.js"></script>  
+  
     
 
 </body>

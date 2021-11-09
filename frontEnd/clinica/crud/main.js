@@ -39,19 +39,38 @@ var fila; //capturar la fila para editar o borrar el registro
 //botón EDITAR    
 $(document).on("click", ".btnEditar", function(){
     fila = $(this).closest("tr");
-    id = parseInt(fila.find('td:eq(0)').text());
-    nombre = fila.find('td:eq(1)').text();
-    pais = fila.find('td:eq(2)').text();
-    edad = parseInt(fila.find('td:eq(3)').text());
+    hospital = parseInt(fila.find('td:eq(0)').text());
+    nombres = fila.find('td:eq(1)').text();
+    apellidos = fila.find('td:eq(2)').text();
+    direccion = parseInt(fila.find('td:eq(3)').text());
+    edad = parseInt(fila.find('td:eq(4)').text());
+    tipo_sangre = parseInt(fila.find('td:eq(5)').text());
+    nombre = parseInt(fila.find('td:eq(6)').text());
+    apellido = parseInt(fila.find('td:eq(7)').text());
+    sintomas = parseInt(fila.find('td:eq(8)').text());
+    medicina = parseInt(fila.find('td:eq(9)').text());
     
-    $("#nombre").val(nombre);
-    $("#pais").val(pais);
-    $("#edad").val(edad);
+    
+    $('#update_id').val(data[0]);
+    $("#hospital").val(data[1]);
+    $("#nombres").val(data[2]);
+    $("#apellidos").val(data[3]);
+    $("#direccion").val(data[4]);
+    $("#telefono").val(data[5]);
+    $("#edad").val(data[6]);
+    $("#tipo_sangre").val(data[7]);
+    $('#dui').val(data[8]);
+    $("#nombre").val(data[9]);
+    $("#apellido").val(data[10]);
+    $("#fecha").val(data[11]);
+    $("#sintomas").val(data[12]);
+    $("#medicina").val(data[13]);
+
     opcion = 2; //editar
     
     $(".modal-header").css("background-color", "#007bff");
     $(".modal-header").css("color", "white");
-    $(".modal-title").text("Editar Persona");            
+    $(".modal-title").text("Editar Historial");            
     $("#modalCRUD").modal("show");  
     
 });
@@ -72,7 +91,7 @@ $(document).on("click", ".btnBorrar", function(){
                 tablaPersonas.row(fila.parents('tr')).remove().draw();
             }
         });
-    }   
+    }       
 });
     
 $("#formPersonas").submit(function(e){
