@@ -72,8 +72,12 @@ if(isset($_POST['guardarHis'])){
     $data2 = $result2->fetchAll(PDO::FETCH_ASSOC);
 
     if ($data2 == 1) {
-        echo "<script>alert('Se registro con exito')</script>";
-        header("location: ../index.html");
+        echo'<script type="text/javascript">
+                    alert("Se registro con Exito...");window.location.href="../index.html";
+                    </script>';
+        
+       /* echo "<script>alert('Se registro con exito')</script>";
+        header("location: ../index.html");*/
     } else {
         echo "<scriptalert('no se pudo registrar el usuario')></script>";
         header("location: ../index.html");
