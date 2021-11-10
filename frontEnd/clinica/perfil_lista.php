@@ -388,6 +388,31 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
         </div>
       </div>
     </div>
+
+    <!--modal delete-->
+    <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog" aria-label="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Borrar Paciente</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="../../backEnd/update.php" method="POST">
+            <div class="modal-body">
+              <input type="hidden" name="delete_id" id="delete_id">
+              <h4>Seguro que desea borrar...</h4>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button type="submit" name="deletep" class="btn btn-primary">Borrar</button>
+            </div>            
+          </form>
+        </div>
+      </div>
+    </div>
+
     <!-- /.content -->
   </div>
   <!-- Control Sidebar -->
@@ -435,8 +460,8 @@ $(document).ready(function(){
 });  
 
 $(document).ready(function(){
-  $('.btnEditar').on('click', function(){
-    $('#editModal').modal('show');
+    $('.btnBorrar').on('click', function(){
+    $('#deletemodal').modal('show');
     $tr = $(this).closest('tr');
     var data = $tr.children("td").map(function(){
       return $(this).text();
@@ -444,25 +469,10 @@ $(document).ready(function(){
 
     console.log(data);
 
-    $('#update_id').val(data[0]);
-    $("#hospital").val(data[1]);
-    $("#nombres").val(data[2]);
-    $("#apellidos").val(data[3]);
-    $("#direccion").val(data[4]);
-    $("#telefono").val(data[5]);
-    $("#edad").val(data[6]);
-    $("#tipo_sangre").val(data[7]);
-    $('#dui').val(data[8]);
-    $("#nombre").val(data[9]);
-    $("#apellido").val(data[10]);
-    $("#fecha").val(data[11]);
-    $("#sintomas").val(data[12]);
-    $("#medicina").val(data[13]);
-
-
-
+    $('#delete_id').val(data[0]);
 
   });
+
 
 
 

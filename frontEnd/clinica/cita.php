@@ -4,12 +4,12 @@ include('../../backEnd/conn.php');
 $objeto = new Conexion();
 $conexion = $objeto->Conectar();
 
-$query = "SELECT * FROM hospital";
+$query = "SELECT * FROM tipocita";
 $result = $conexion->prepare($query);
 $result->execute();
 $data = $result->fetchAll(PDO::FETCH_ASSOC);
 
-$query1 = "SELECT * FROM paciente";
+$query1 = "SELECT * FROM usuario";
 $result1 = $conexion->prepare($query1);
 $result1->execute();
 $data1=$result1->fetchAll(PDO::FETCH_ASSOC);
@@ -19,10 +19,9 @@ $result3 = $conexion->prepare($query3);
 $result3->execute();
 $data3=$result3->fetchAll(PDO::FETCH_ASSOC);
 
-$query4 = "SELECT * FROM medicina";
-$result4 = $conexion->prepare($query4);
-$result4->execute();
-$data4=$result4->fetchAll(PDO::FETCH_ASSOC);
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -234,7 +233,7 @@ $data4=$result4->fetchAll(PDO::FETCH_ASSOC);
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Historial Medico</h1>
+              <h1 class="m-0">Cita Medica</h1>
             </div><!-- /.col -->
           </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -252,29 +251,18 @@ $data4=$result4->fetchAll(PDO::FETCH_ASSOC);
               <div class="card-body">
                 <div class="tab-content">
                   <div class="tab-pane active" id="tab_1">
-                    <h3>Crear Historial Medico</h3>
+                    <h3>Crear Cita Medica</h3>
                     <form action="../../backEnd/registro.php" method="POST">
-                        <div class="form-group col-md-4">
-                          <label for="inputState">Hospital</label>
-                          <select id="inputState" name="hospital" class="form-control">
-                            <option selected>Elegir Hospital</option>
-                          <?php 
-                          
-                          foreach($data as $dat){
-                            echo '<option value="'.$dat['idHospital'].'">'.$dat['hospital'].'</option>';
-                          }
-                          ?>
-                          </select>
-                        </div>
+                        <div class="form-row">
                         <div class="form-group col-md-4">
                           <label for="inputState">paciente</label>
-                          <select id="inputState" name="paciente" class="form-control">
-                            <option selected>Elegir paciente</option>
+                          <select id="inputState" name="usuario" class="form-control">
+                            <option selected value="<?php echo $_SESSION['id'];?>"><?php echo $_SESSION['usuario'];?></option>
                           <?php 
-                          
-                          foreach($data1 as $dat1){
-                            echo '<option value="'.$dat1['idPaciente'].'">'.$dat1['nombres'].'</option>';
-                          }
+                          /*
+                          foreach($data3 as $dat3){
+                            echo '<option value="'.$dat3['idDoctor'].'">'.$dat3['nombre'].'</option>';
+                          }*/
                           ?>
                           </select>
                         </div>
@@ -290,30 +278,29 @@ $data4=$result4->fetchAll(PDO::FETCH_ASSOC);
                           ?>
                           </select>
                         </div>
-                         <div class="form-group col-md-5">
-                          <label for="inputAddress2">Fecha de la ultima cita</label>
-                          <input type="tel" name="fecha" class="form-control" id="inputAddress2" placeholder="formato YY/MM/DD">
+                         
+                      </div>  
                         </div>
-                      </div>
+
                       <div class="form-row">
-                        <div class="form-group col-md-3">
-                          <label for="inputAddress2">Sintomas</label>
-                          <input type="text" name="sintomas" class="form-control" id="inputAddress2" placeholder="Agregue un numero de telefono">
-                        </div>
-                        <div class="form-group col-md-4">
-                          <label for="inputState">Medicina</label>
-                          <select id="inputState" name="medicina" class="form-control">
-                            <option selected>Elegir Doctor</option>
+                      <div class="form-group col-md-4">
+                          <label for="inputState">Tipo De Cita</label>
+                          <select id="inputState" name="tipo" class="form-control">
+                            <option selected>Tipo de Cita</option>
                           <?php 
                           
-                          foreach($data4 as $dat4){
-                            echo '<option value="'.$dat4['idMedicina'].'">'.$dat4['nombreM'].'</option>';
+                          foreach($data as $dat){
+                            echo '<option value="'.$dat['idTipo'].'">'.$dat['tipo'].'</option>';
                           }
                           ?>
                           </select>
                         </div>
+                        <div class="form-group col-md-4">
+                          <label for="inputAddress2">Fecha de la cita</label>
+                          <input type="text" name="fecha" class="form-control" id="inputAddress2" placeholder="YY-MM-DD">
+                        </div>
                       </div>
-                      <button type="submit" class="btn btn-primary" name="guardarHis">Guardar</button>
+                      <button type="submit" class="btn btn-primary" name="guardarCi">Guardar</button>
                     </form>
                   </div>                                
                   <!-- /.tab-pane -->

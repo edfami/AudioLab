@@ -48,6 +48,25 @@ if(isset($_POST['deleteHis'])){
     }
 
 }
+if(isset($_POST['deletep'])){
+    $id = $_POST['delete_id'];
+
+    $query = "UPDATE paciente SET estado = 0 where idPaciente = '$id'; ";
+    $result = $conexion->prepare($query);
+    $result->execute();
+    $data = $result->fetchAll(PDO::FETCH_ASSOC);
+    if($data == 1){
+
+        echo "<script> alert('Datos Eliminados');</script>";
+        header("Location:../frontEnd/clinica/perfil_lista.php");
+
+
+    }else{
+        echo "<script> alert('No se ha podido Eliminar');</script>";
+        header("Location:../frontEnd/clinica/perfil_lista.php");
+    }
+
+}
 
 
 

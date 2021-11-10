@@ -80,3 +80,30 @@ if(isset($_POST['guardarHis'])){
     }
     
 }
+
+if(isset($_POST['guardarCi'])){
+    $paciente = $_POST['usuario'];
+    $doctor = $_POST['doctor'];
+    $fecha = $_POST['fecha'];
+    $tipo = $_POST['tipo'];
+
+    $query = "INSERT INTO `citamedica`(`idUsuario`, `idDoctor`, `fechaActual`, `fechaCita`, `idTipo`, `estado`) 
+    VALUES ($paciente,$doctor,Now(),$fecha,$tipo, '1');";
+    $result = $conexion->prepare($query);
+    $result->execute();
+    $data = $result->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($data2 == 1) {
+        echo "<script>alert('Se creado con exito')</script>";
+        header("location: ../frontEnd/clinica/cita.php");
+    } else {
+        echo "<scriptalert('no se pudo crear la cita')></script>";
+        header("location: ../frontEnd/clinica/cita.php");
+    }
+
+
+
+
+
+
+}
