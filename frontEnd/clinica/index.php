@@ -177,7 +177,7 @@ include('../../backEnd/conn.php');
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="listar_paciente" class="nav-link">
+                <a href="perfil_lista.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Lista de Paciente</p>
                 </a>

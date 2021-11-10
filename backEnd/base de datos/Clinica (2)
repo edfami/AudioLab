@@ -1,0 +1,691 @@
+-- phpMyAdmin SQL Dump
+-- version 5.1.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Nov 08, 2021 at 01:39 AM
+-- Server version: 10.4.18-MariaDB
+-- PHP Version: 7.3.27
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `clinica`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `citamedica`
+--
+
+CREATE TABLE `citamedica` (
+  `idCita` int(11) NOT NULL,
+  `idPaciente` int(11) NOT NULL,
+  `idDoctor` int(11) NOT NULL,
+  `fechaActual` date NOT NULL,
+  `fechaCita` date NOT NULL,
+  `estado` bit(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `departamento`
+--
+
+CREATE TABLE `departamento` (
+  `idDepartamento` int(11) NOT NULL,
+  `departamento` varchar(50) NOT NULL,
+  `idPais` int(11) NOT NULL,
+  `estado` bit(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `departamento`
+--
+
+INSERT INTO `departamento` (`idDepartamento`, `departamento`, `idPais`, `estado`) VALUES
+(1, 'San Salvador', 1, b'1'),
+(2, 'Ahuachapán', 1, b'1'),
+(3, 'San Miguel', 1, b'1'),
+(4, 'La Union', 1, b'1'),
+(5, 'Cabañas', 1, b'1'),
+(6, 'La Paz', 1, b'1'),
+(7, 'La Libertad', 1, b'1'),
+(8, 'Morazán', 1, b'1'),
+(9, 'Sonsonate', 1, b'1'),
+(10, 'Santa Ana', 1, b'1'),
+(11, 'Chalatenango', 1, b'1'),
+(12, 'San Vicente', 1, b'1'),
+(13, 'Usulután', 1, b'1'),
+(14, 'Cuscatlán', 1, b'1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dotor`
+--
+
+CREATE TABLE `dotor` (
+  `idDoctor` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `apellido` varchar(50) NOT NULL,
+  `fechaNacimiento` date NOT NULL,
+  `edad` int(11) NOT NULL,
+  `direccion` varchar(100) NOT NULL,
+  `telefono` int(11) NOT NULL,
+  `celular` int(11) NOT NULL,
+  `idMunicipio` int(11) NOT NULL,
+  `idHospital` int(11) NOT NULL,
+  `estado` bit(1) NOT NULL,
+  `horario` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `expiracion`
+--
+
+CREATE TABLE `expiracion` (
+  `idYearExp` int(11) NOT NULL,
+  `expiracion` date NOT NULL,
+  `estado` bit(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `expiracion`
+--
+
+INSERT INTO `expiracion` (`idYearExp`, `expiracion`, `estado`) VALUES
+(1, '2021-11-08', b'1'),
+(2, '2029-02-24', b'1'),
+(3, '2030-07-02', b'1'),
+(4, '2027-07-07', b'1'),
+(5, '2022-02-14', b'1'),
+(6, '2028-12-21', b'1'),
+(7, '2023-08-23', b'1'),
+(8, '2025-01-01', b'1'),
+(9, '2021-12-31', b'1'),
+(10, '2020-11-25', b'1'),
+(11, '2031-05-18', b'1'),
+(12, '2026-08-15', b'1'),
+(13, '2026-09-15', b'1'),
+(14, '2022-10-31', b'1'),
+(15, '2024-11-14', b'1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `factura`
+--
+
+CREATE TABLE `factura` (
+  `idFactura` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
+  `idPaciente` int(11) NOT NULL,
+  `descripcion` varchar(150) NOT NULL,
+  `costoUni` double NOT NULL,
+  `total` double NOT NULL,
+  `estado` bit(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `historialmedica`
+--
+
+CREATE TABLE `historialmedica` (
+  `idHIstorial` int(11) NOT NULL,
+  `idHospital` int(11) NOT NULL,
+  `idPaciente` int(11) NOT NULL,
+  `idDoctor` int(11) NOT NULL,
+  `ultFechaCita` date NOT NULL,
+  `sintomas` varchar(250) NOT NULL,
+  `idMedicina` int(11) NOT NULL,
+  `estado` bit(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hospital`
+--
+
+CREATE TABLE `hospital` (
+  `idHospital` int(11) NOT NULL,
+  `hospital` varchar(50) NOT NULL,
+  `direccion` varchar(100) NOT NULL,
+  `telefono` varchar(11) NOT NULL,
+  `estado` bit(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `hospital`
+--
+
+INSERT INTO `hospital` (`idHospital`, `hospital`, `direccion`, `telefono`, `estado`) VALUES
+(1, 'Hospital El Salvador', 'Salón Centro Americano, Av. De La Revolucion 222, San Salvador', '2594 2100', b'1'),
+(2, 'Hospital Diagnostico', 'Diagonal Luis E. Vásquez No. 426', '2505 5700', b'1'),
+(3, 'Hospital Pro-Familia', 'Edificio Pro-Familia, 25 Avenida Nte. 583, San Salvador', '2132 8100', b'1'),
+(4, 'Hospital Rosales', '25 Avenida Nte., San Salvado', '2231 9200', b'1'),
+(5, 'Hospital Nacional Dr. Juan José Fernández Zacamil', 'Comunidad 13 De Enero San Salvador, Mejicanos', '2594 5000', b'1'),
+(6, 'Hospital Nacional General de Neumología y Medicina', 'C. a Planes de Renderos 8 1/2, Los Planes de Renderos', '2201 2100', b'1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `laboratorio`
+--
+
+CREATE TABLE `laboratorio` (
+  `idLaboratorio` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `estado` bit(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `laboratorio`
+--
+
+INSERT INTO `laboratorio` (`idLaboratorio`, `nombre`, `estado`) VALUES
+(1, 'San Nicolas', b'1'),
+(2, 'Farmacia AudioLAb', b'1'),
+(3, 'Farmacias UNO', b'1'),
+(4, 'Farmacias Camila', b'1'),
+(5, 'Farmacias Betel', b'1'),
+(6, 'San Benito', b'1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `medicina`
+--
+
+CREATE TABLE `medicina` (
+  `idMedicina` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `idProveedor` int(11) NOT NULL,
+  `idLaboratorio` int(11) NOT NULL,
+  `idYearExp` int(11) NOT NULL,
+  `estado` bit(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `medicina`
+--
+
+INSERT INTO `medicina` (`idMedicina`, `nombre`, `idProveedor`, `idLaboratorio`, `idYearExp`, `estado`) VALUES
+(1, 'Paracetamol', 15, 2, 8, b'1'),
+(2, 'Ranitidina', 1, 3, 5, b'1'),
+(3, 'Insulina humana cristalina ADNr', 18, 4, 1, b'1'),
+(4, 'Ibuprofeno ', 16, 1, 1, b'1'),
+(5, 'Loratadina ', 17, 5, 10, b'1'),
+(6, 'Clorfeniramin ', 1, 3, 7, b'1'),
+(7, 'Metocarbamol ', 18, 2, 5, b'1'),
+(8, 'Oxitocina', 16, 6, 6, b'1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `municipio`
+--
+
+CREATE TABLE `municipio` (
+  `idMunicipio` int(11) NOT NULL,
+  `municipio` varchar(50) NOT NULL,
+  `idDepartamento` int(11) NOT NULL,
+  `estado` bit(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `municipio`
+--
+
+INSERT INTO `municipio` (`idMunicipio`, `municipio`, `idDepartamento`, `estado`) VALUES
+(1, 'San Salvador', 1, b'1'),
+(2, 'Aguilares', 1, b'1'),
+(3, 'Apopa', 1, b'1'),
+(4, 'Mejicanos', 1, b'1'),
+(5, 'Ciudad Delgado', 1, b'1'),
+(6, 'Ilopango', 1, b'1'),
+(7, 'Nejapa', 1, b'1'),
+(8, 'Ahuachapan', 2, b'1'),
+(9, 'Apaneca', 2, b'1'),
+(10, 'Tacuba', 2, b'1'),
+(11, 'San Miguel', 3, b'1'),
+(12, 'Carolina', 3, b'1'),
+(13, 'Chinameca', 3, b'1'),
+(14, 'Lolotique', 3, b'1'),
+(15, 'La Unión', 4, b'1'),
+(16, 'Anamoros', 4, b'1'),
+(17, 'Bolivar', 4, b'1'),
+(18, 'Conchagua', 4, b'1'),
+(19, 'El Carmen', 4, b'1'),
+(20, 'Sensuntepeque', 5, b'1'),
+(21, 'Cinquera', 5, b'1'),
+(22, 'Dolores', 5, b'1'),
+(23, 'Ilobasco', 5, b'1'),
+(24, 'Zacatecoluca', 6, b'1'),
+(25, 'El Rosario', 6, b'1'),
+(26, 'La Ceiba', 6, b'1'),
+(27, 'Santa Tecla', 7, b'1'),
+(28, 'Comasagua', 7, b'1'),
+(29, 'Jayaque', 7, b'1'),
+(30, 'Jicalapa', 7, b'1'),
+(31, 'Arambala', 8, b'1'),
+(32, 'Cacaopera', 8, b'1'),
+(33, 'Chilanga', 8, b'1'),
+(34, 'Sonsonate', 9, b'1'),
+(35, 'Acajutla', 9, b'1'),
+(36, 'Armenia', 9, b'1'),
+(37, 'Caluco', 9, b'1'),
+(38, 'Santa Ana', 10, b'1'),
+(39, 'Coatepeque', 10, b'1'),
+(40, 'El Congo', 10, b'1'),
+(41, 'El Congo', 10, b'1'),
+(42, 'Chalatenango', 11, b'1'),
+(43, 'Arcatao', 11, b'1'),
+(44, 'San Vicente', 12, b'1'),
+(45, 'Apastepeque', 12, b'1'),
+(46, 'Guadalupe', 12, b'1'),
+(47, 'Usulutan', 13, b'1'),
+(48, 'Alegria', 13, b'1'),
+(49, 'California', 13, b'1'),
+(50, 'Berlin', 13, b'1'),
+(51, 'Cojutepeque', 14, b'1'),
+(52, 'El Carmen', 14, b'1'),
+(53, 'Candelaria', 14, b'1'),
+(54, 'Tenancingo', 14, b'1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `paciente`
+--
+
+CREATE TABLE `paciente` (
+  `idPaciente` int(11) NOT NULL,
+  `nombres` varchar(50) NOT NULL,
+  `apellidos` varchar(50) NOT NULL,
+  `direccion` varchar(100) NOT NULL,
+  `telefono` int(11) NOT NULL,
+  `celular` int(11) NOT NULL,
+  `fechaNacimiento` date NOT NULL,
+  `edad` int(11) NOT NULL,
+  `idMunicipio` int(11) NOT NULL,
+  `estado` bit(1) NOT NULL,
+  `DUI` varchar(10) NOT NULL,
+  `tipo_sangre` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pais`
+--
+
+CREATE TABLE `pais` (
+  `idPais` int(11) NOT NULL,
+  `pais` varchar(50) NOT NULL,
+  `estado` bit(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pais`
+--
+
+INSERT INTO `pais` (`idPais`, `pais`, `estado`) VALUES
+(1, 'El Salvador', b'1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `proveedor`
+--
+
+CREATE TABLE `proveedor` (
+  `idproveedor` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `direccion` varchar(100) NOT NULL,
+  `estado` bit(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `proveedor`
+--
+
+INSERT INTO `proveedor` (`idproveedor`, `nombre`, `direccion`, `estado`) VALUES
+(1, 'Compania Bristol-myers Squibb De Ca', 'Avenida Olimpica 3765, Entre 71 y 73 Ave. Sur Colonia Escalon', b'1'),
+(15, 'Johnson & Johnson El Salvador S.A.', 'Calle Amberes 145 Colonia Roma', b'1'),
+(16, 'Laboratorios Carosa, S.A. De C.V.', 'Plan de La Laguna, Poligono G, Lote 1, Antiguo Cuscatlan La Libertad, 1301', b'1'),
+(17, 'Laboratorios Pharmedic', 'Blvd del Ejercito Km 4 1/2Soyapango, San Salvador,', b'1'),
+(18, ' Drogueria Saimed', 'Calle Chaparrastique Bodega 1- A , Zona Industrial Santa Elena, Antiguo Cuscatlán la Libertad', b'1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rol`
+--
+
+CREATE TABLE `rol` (
+  `idRol` int(11) NOT NULL,
+  `rol` varchar(50) NOT NULL,
+  `estado` bit(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `rol`
+--
+
+INSERT INTO `rol` (`idRol`, `rol`, `estado`) VALUES
+(1, 'administrador', b'1'),
+(2, 'paciente', b'1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `usuario`
+--
+
+CREATE TABLE `usuario` (
+  `idUsuario` int(11) NOT NULL,
+  `usuario` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `idRol` int(11) NOT NULL,
+  `estado` bit(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `usuario`
+--
+
+INSERT INTO `usuario` (`idUsuario`, `usuario`, `password`, `email`, `idRol`, `estado`) VALUES
+(3, 'prueba', 'c893bad68927b457dbed39460e6afd62', 'prueba@gmail.com', 1, b'1');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `citamedica`
+--
+ALTER TABLE `citamedica`
+  ADD PRIMARY KEY (`idCita`),
+  ADD KEY `citamedica_ibfk_1` (`idPaciente`),
+  ADD KEY `citamedica_ibfk_2` (`idDoctor`);
+
+--
+-- Indexes for table `departamento`
+--
+ALTER TABLE `departamento`
+  ADD PRIMARY KEY (`idDepartamento`),
+  ADD KEY `ForeignKeyPais` (`idPais`);
+
+--
+-- Indexes for table `dotor`
+--
+ALTER TABLE `dotor`
+  ADD PRIMARY KEY (`idDoctor`),
+  ADD KEY `dotor_ibfk_1` (`idMunicipio`),
+  ADD KEY `dotor_ibfk_2` (`idHospital`);
+
+--
+-- Indexes for table `expiracion`
+--
+ALTER TABLE `expiracion`
+  ADD PRIMARY KEY (`idYearExp`);
+
+--
+-- Indexes for table `factura`
+--
+ALTER TABLE `factura`
+  ADD PRIMARY KEY (`idFactura`),
+  ADD KEY `factura_ibfk_1` (`idUsuario`),
+  ADD KEY `factura_ibfk_2` (`idPaciente`);
+
+--
+-- Indexes for table `historialmedica`
+--
+ALTER TABLE `historialmedica`
+  ADD PRIMARY KEY (`idHIstorial`),
+  ADD KEY `idHospital` (`idHospital`),
+  ADD KEY `idPaciente` (`idPaciente`),
+  ADD KEY `idDoctor` (`idDoctor`),
+  ADD KEY `idMedicina` (`idMedicina`);
+
+--
+-- Indexes for table `hospital`
+--
+ALTER TABLE `hospital`
+  ADD PRIMARY KEY (`idHospital`);
+
+--
+-- Indexes for table `laboratorio`
+--
+ALTER TABLE `laboratorio`
+  ADD PRIMARY KEY (`idLaboratorio`);
+
+--
+-- Indexes for table `medicina`
+--
+ALTER TABLE `medicina`
+  ADD PRIMARY KEY (`idMedicina`),
+  ADD KEY `medicina_ibfk_1` (`idProveedor`),
+  ADD KEY `medicina_ibfk_2` (`idLaboratorio`),
+  ADD KEY `medicina_ibfk_3` (`idYearExp`);
+
+--
+-- Indexes for table `municipio`
+--
+ALTER TABLE `municipio`
+  ADD PRIMARY KEY (`idMunicipio`),
+  ADD KEY `ForeignKeyDepartamento` (`idDepartamento`);
+
+--
+-- Indexes for table `paciente`
+--
+ALTER TABLE `paciente`
+  ADD PRIMARY KEY (`idPaciente`),
+  ADD KEY `ForeignKeyMunicipio` (`idMunicipio`);
+
+--
+-- Indexes for table `pais`
+--
+ALTER TABLE `pais`
+  ADD PRIMARY KEY (`idPais`);
+
+--
+-- Indexes for table `proveedor`
+--
+ALTER TABLE `proveedor`
+  ADD PRIMARY KEY (`idproveedor`);
+
+--
+-- Indexes for table `rol`
+--
+ALTER TABLE `rol`
+  ADD PRIMARY KEY (`idRol`);
+
+--
+-- Indexes for table `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`idUsuario`),
+  ADD KEY `idRol` (`idRol`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `citamedica`
+--
+ALTER TABLE `citamedica`
+  MODIFY `idCita` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `departamento`
+--
+ALTER TABLE `departamento`
+  MODIFY `idDepartamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `dotor`
+--
+ALTER TABLE `dotor`
+  MODIFY `idDoctor` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `expiracion`
+--
+ALTER TABLE `expiracion`
+  MODIFY `idYearExp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `factura`
+--
+ALTER TABLE `factura`
+  MODIFY `idFactura` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `historialmedica`
+--
+ALTER TABLE `historialmedica`
+  MODIFY `idHIstorial` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `hospital`
+--
+ALTER TABLE `hospital`
+  MODIFY `idHospital` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `laboratorio`
+--
+ALTER TABLE `laboratorio`
+  MODIFY `idLaboratorio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `medicina`
+--
+ALTER TABLE `medicina`
+  MODIFY `idMedicina` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `municipio`
+--
+ALTER TABLE `municipio`
+  MODIFY `idMunicipio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+
+--
+-- AUTO_INCREMENT for table `paciente`
+--
+ALTER TABLE `paciente`
+  MODIFY `idPaciente` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pais`
+--
+ALTER TABLE `pais`
+  MODIFY `idPais` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `proveedor`
+--
+ALTER TABLE `proveedor`
+  MODIFY `idproveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `rol`
+--
+ALTER TABLE `rol`
+  MODIFY `idRol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `citamedica`
+--
+ALTER TABLE `citamedica`
+  ADD CONSTRAINT `citamedica_ibfk_1` FOREIGN KEY (`idPaciente`) REFERENCES `paciente` (`idPaciente`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `citamedica_ibfk_2` FOREIGN KEY (`idDoctor`) REFERENCES `dotor` (`idDoctor`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `departamento`
+--
+ALTER TABLE `departamento`
+  ADD CONSTRAINT `ForeignKeyPais` FOREIGN KEY (`idPais`) REFERENCES `pais` (`idPais`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `dotor`
+--
+ALTER TABLE `dotor`
+  ADD CONSTRAINT `dotor_ibfk_1` FOREIGN KEY (`idMunicipio`) REFERENCES `municipio` (`idMunicipio`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `dotor_ibfk_2` FOREIGN KEY (`idHospital`) REFERENCES `hospital` (`idHospital`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `factura`
+--
+ALTER TABLE `factura`
+  ADD CONSTRAINT `factura_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `factura_ibfk_2` FOREIGN KEY (`idPaciente`) REFERENCES `paciente` (`idPaciente`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `historialmedica`
+--
+ALTER TABLE `historialmedica`
+  ADD CONSTRAINT `historialmedica_ibfk_1` FOREIGN KEY (`idHospital`) REFERENCES `hospital` (`idHospital`),
+  ADD CONSTRAINT `historialmedica_ibfk_2` FOREIGN KEY (`idPaciente`) REFERENCES `paciente` (`idPaciente`),
+  ADD CONSTRAINT `historialmedica_ibfk_3` FOREIGN KEY (`idDoctor`) REFERENCES `dotor` (`idDoctor`),
+  ADD CONSTRAINT `historialmedica_ibfk_4` FOREIGN KEY (`idMedicina`) REFERENCES `medicina` (`idMedicina`);
+
+--
+-- Constraints for table `medicina`
+--
+ALTER TABLE `medicina`
+  ADD CONSTRAINT `medicina_ibfk_1` FOREIGN KEY (`idProveedor`) REFERENCES `proveedor` (`idproveedor`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `medicina_ibfk_2` FOREIGN KEY (`idLaboratorio`) REFERENCES `laboratorio` (`idLaboratorio`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `medicina_ibfk_3` FOREIGN KEY (`idYearExp`) REFERENCES `expiracion` (`idYearExp`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `municipio`
+--
+ALTER TABLE `municipio`
+  ADD CONSTRAINT `ForeignKeyDepartamento` FOREIGN KEY (`idDepartamento`) REFERENCES `departamento` (`idDepartamento`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `paciente`
+--
+ALTER TABLE `paciente`
+  ADD CONSTRAINT `ForeignKeyMunicipio` FOREIGN KEY (`idMunicipio`) REFERENCES `municipio` (`idMunicipio`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `usuario`
+--
+ALTER TABLE `usuario`
+  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`idRol`) REFERENCES `rol` (`idRol`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

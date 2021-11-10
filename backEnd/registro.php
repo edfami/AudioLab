@@ -24,3 +24,59 @@ if (isset($_POST['registro'])) {
         header("location: ../index.html");
     }
 }
+
+if(isset($_POST['guardar'])){
+    $nombre = $_POST['nombre'];
+    $apellido = $_POST['apellido'];
+    $direccion = $_POST['direccion'];
+    $telefono = $_POST['telefono'];
+    $celular = $_POST['celular'];
+    $municipio = $_POST['municipio'];
+    $fecha = $_POST['fecha'];
+    $edad = $_POST['edad'];
+    $dui = $_POST['dui'];
+    $tipo = $_POST['tipo'];
+
+    $query1 = "INSERT INTO paciente (nombres, apellidos, direccion, telefono, celular, fechaNacimiento, edad, idMunicipio,estado,Dui,tipo_sangre) 
+    value ('$nombre', '$apellido', '$direccion','$telefono', '$celular', '$fecha',
+    '$edad', '$municipio', '1', '$dui', '$tipo')";
+
+    $result1 = $conexion->prepare($query1);
+    $result1->execute();
+    $data1 = $result1->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($data1 == 1) {
+        echo "<script>alert('Se registro con exito')</script>";
+        header("location: ../frontEnd/clinica/perfil_lista.php");
+    } else {
+        echo "<scriptalert('no se pudo registrar el usuario')></script>";
+        header("location: ../frontEnd/clinica/perfil.php");
+    }
+    
+
+}
+
+if(isset($_POST['guardarHis'])){
+    $hospital = $_POST['hospital'];
+    $paciente = $_POST['paciente'];
+    $doctor = $_POST['doctor'];
+    $fecha = $_POST['fecha'];
+    $sintomas = $_POST['sintomas'];
+    $medicina = $_POST['medicina'];
+
+    $query2 = "INSERT INTO `historialmedica` (`idHIstorial`, `idHospital`, `idPaciente`, `idDoctor`, `ultFechaCita`, `sintomas`, `idMedicina`, `estado`) 
+    VALUES (NULL, '$hospital', '$paciente', '$doctor', '$fecha', '$sintomas', '$medicina', b'1');";
+
+    $result2 = $conexion->prepare($query2);
+    $result2->execute();
+    $data2 = $result2->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($data2 == 1) {
+        echo "<script>alert('Se registro con exito')</script>";
+        header("location: ../index.html");
+    } else {
+        echo "<scriptalert('no se pudo registrar el usuario')></script>";
+        header("location: ../index.html");
+    }
+    
+}

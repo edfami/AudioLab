@@ -3,12 +3,9 @@ include_once '../../backEnd/conn.php';
 include_once '../../backEnd/auth.php';
 $objeto = new Conexion();
 $conexion = $objeto->Conectar();
-$query = "SELECT historialmedica.idHIstorial ,h.hospital, p.nombres,p.apellidos,p.direccion,p.telefono,p.edad, p.tipo_sangre, p.DUI,d.nombre,d.apellido, ultFechaCita, sintomas, m.nombreM FROM `historialmedica` 
-INNER JOIN hospital as h ON h.idHospital = historialmedica.idHospital 
-INNER JOIN dotor AS d on d.idDoctor = historialmedica.idDoctor 
-INNER JOIN paciente as p on p.idPaciente = historialmedica.idPaciente 
-INNER join medicina as m on m.idMedicina = historialmedica.idMedicina 
-WHERE historialmedica.estado = 1;
+$query = "SELECT idPaciente, nombres, apellidos, direccion, telefono, celular, fechaNacimiento, edad, m.municipio, DUI, tipo_sangre FROM `paciente` as p 
+INNER join municipio as m on m.idMunicipio = p.idMunicipio 
+WHERE p.estado = 1;
 ";
 $resultado = $conexion->prepare($query);
 $resultado->execute();
@@ -248,19 +245,16 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
               <thead class="text-center">
                <tr>
                 <th>id</th> 
-                <th>Hospital</th>
-                <th>Nombre Paciente</th>
-                <th>Apellido Paciente</th>
-                <th>Direcion</th>
-                <th>Telefono</th>                                
-                <th>Edad</th>
-                <th>Tipo de Sangre</th>
-                <th>DUI</th>
-                <th>Nombre Doctor</th>
-                <th>Apellido Doctor</th>
-                <th>Ultima Fecha de cita</th>
-                <th>Sintomas</th>
-                <th>Medicina</th>  
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Direccion</th>
+                <th>telefono</th>
+                <th>celular</th>                                
+                <th>fecha</th>
+                <th>edad</th>
+                <th>municipio</th>
+                <th>DUI Doctor</th>
+                <th>Tipo de Sangre Doctor</th>  
                 <th>Acciones</th>
                </tr>
               </thead>
@@ -269,20 +263,17 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
                 foreach($data as $dat) {                                                        
                ?>
                <tr>
-                 <td><?php echo $dat['idHIstorial'] ?></td>
-                 <td><?php echo $dat['hospital'] ?></td>
+                 <td><?php echo $dat['idPaciente'] ?></td>
                  <td><?php echo $dat['nombres'] ?></td>
                  <td><?php echo $dat['apellidos'] ?></td>
                  <td><?php echo $dat['direccion'] ?></td>
                  <td><?php echo $dat['telefono'] ?></td>
+                 <td><?php echo $dat['celular'] ?></td>
+                 <td><?php echo $dat['fechaNacimiento'] ?></td>
                  <td><?php echo $dat['edad'] ?></td>
+                 <td><?php echo $dat['municipio'] ?></td>   
+                 <td><?php echo $dat['DUI'] ?></td>
                  <td><?php echo $dat['tipo_sangre'] ?></td>
-                 <td><?php echo $dat['DUI'] ?></td>   
-                 <td><?php echo $dat['nombre'] ?></td>
-                 <td><?php echo $dat['apellido'] ?></td>
-                 <td><?php echo $dat['ultFechaCita'] ?></td>
-                 <td><?php echo $dat['sintomas'] ?></td>                 
-                 <td><?php echo $dat['nombreM'] ?></td>
                  <td></td>
                </tr>
                <?php
@@ -397,32 +388,6 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
         </div>
       </div>
     </div>
-
-    <!--MODAL DELETE-->
-    <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog" aria-label="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Borrar Historial Medico</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form action="../../backEnd/update.php" method="POST">
-            <div class="modal-body">
-              <input type="hidden" name="delete_id" id="delete_id">
-              <h4>Seguro que desea borrar...</h4>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-              <button type="submit" name="deleteHis" class="btn btn-primary">Borrar</button>
-            </div>            
-          </form>
-        </div>
-      </div>
-    </div>
-
-
     <!-- /.content -->
   </div>
   <!-- Control Sidebar -->
@@ -447,7 +412,7 @@ $(document).ready(function(){
        "columnDefs":[{
         "targets": -1,
         "data":null,
-        "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btnEditar'>Editar</button><button class='btn btn-danger btnBorrar'>Borrar</button></div></div>"  
+        "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-danger btnBorrar'>Borrar</button></div></div>"  
        }],
         
         //Para cambiar el lenguaje a español
@@ -494,18 +459,8 @@ $(document).ready(function(){
     $("#sintomas").val(data[12]);
     $("#medicina").val(data[13]);
 
-  });
 
-    $('.btnBorrar').on('click', function(){
-    $('#deletemodal').modal('show');
-    $tr = $(this).closest('tr');
-    var data = $tr.children("td").map(function(){
-      return $(this).text();
-    }).get();
 
-    console.log(data);
-
-    $('#delete_id').val(data[0]);
 
   });
 

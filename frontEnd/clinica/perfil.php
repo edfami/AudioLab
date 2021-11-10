@@ -1,6 +1,16 @@
 <?php 
 include('../../backEnd/auth.php');
 include('../../backEnd/conn.php');
+$objeto = new Conexion();
+$conexion = $objeto->Conectar();
+
+$query = "SELECT * FROM municipio";
+$result = $conexion->prepare($query);
+$result->execute();
+$data = $result->fetchAll(PDO::FETCH_ASSOC);
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -177,7 +187,7 @@ include('../../backEnd/conn.php');
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="listar_paciente" class="nav-link">
+                <a href="perfil_lista.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Lista de Paciente</p>
                 </a>
@@ -209,21 +219,15 @@ include('../../backEnd/conn.php');
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0">Peril</h1>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content-header -->    
 
     <!-- Main content -->
     <section class="content">
@@ -236,8 +240,67 @@ include('../../backEnd/conn.php');
               <div class="card-body">
                 <div class="tab-content">
                   <div class="tab-pane active" id="tab_1">
-                    <h3>Hola!!! <?php echo $_SESSION['usuario']; ?></h3>
-                    
+                    <h3>Crear Perfil</h3>
+                    <form action="../../backEnd/registro.php" method="POST">
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="inputEmail4">Nombre:</label>
+                          <input type="text" name="nombre" class="form-control" id="inputEmail4" placeholder="Escriba su nombre">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputPassword4">Apellido</label>
+                          <input type="text" name="apellido" class="form-control" id="inputPassword4" placeholder="Escriba su Apellido">
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-xl-12">
+                          <label for="inputAddress">Direccion</label>
+                          <input type="text" name="direccion" class="form-control" id="inputAddress" placeholder="Escriba la direccion">
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-md-3">
+                          <label for="inputAddress2">Telefono</label>
+                          <input type="tel" name="telefono" class="form-control" id="inputAddress2" placeholder="Agregue un numero de telefono">
+                        </div>
+                        <div class="form-group col-md-3">
+                          <label for="inputAddress2">celular</label>
+                          <input type="tel" name="celular" class="form-control" id="inputAddress2" placeholder="Agregue un numero celular">
+                        </div>
+                        <div class="form-group col-md-5">
+                          <label for="inputAddress2">Fecha de Nacimiento</label>
+                          <input type="tel" name="fecha" class="form-control" id="inputAddress2" placeholder="formato YY/MM/DD">
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-xs-4">
+                          <label for="inputCity">Edad</label>
+                          <input type="text" class="form-control" name="edad" id="inputCity">
+                        </div>
+
+                        <div class="form-group col-md-4">
+                          <label for="inputState">Municipio</label>
+                          <select id="inputState" name="municipio" class="form-control">
+                            <option selected>Elegir Municipio</option>
+                          <?php 
+                          
+                          foreach($data as $dat){
+                            echo '<option value="'.$dat['idMunicipio'].'">'.$dat['municipio'].'</option>';
+                          }
+                          ?>
+                          </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                          <label for="inputZip">DUI</label>
+                          <input type="text" name="dui" class="form-control" id="inputZip">
+                        </div>
+                        <div class="form-group col-md-2">
+                          <label for="inputZip">Tipo de sangre</label>
+                          <input type="text" name="tipo" class="form-control" id="inputZip">
+                        </div>
+                      </div>
+                      <button type="submit" class="btn btn-primary" name="guardar">Guardar</button>
+                    </form>
                   </div>                                
                   <!-- /.tab-pane -->
                 </div>
@@ -250,48 +313,9 @@ include('../../backEnd/conn.php');
         </div>
         <!-- /.row -->
         <!-- Main row -->
-        <div class="row">
-          <!-- Left col -->
-          <section class="col-lg-7 connectedSortable">
-          
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-12">
-                  <div class="card">
-                    <dv class="card-body">
-                      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"> 
-                        <ol class="carousel-indicators">
-                          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                        </ol>
-                        <div class="carousel-inner">                         
-                            <div class="carousel-item active">
-                              <img class="d-block w-100" src="img/doc4.jpeg" alt="First slide">
-                            </div>                    
-                            <div class="carousel-item">
-                              <img class="d-block w-100" src="img/doc2.jpeg" alt="Second slide">
-                            </div>
-                            <div class="carousel-item">
-                              <img class="d-block w-100" src="img/doc4.jpeg" alt="Third slide">
-                            </div>                         
-                        </div>
-                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                          <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                          <span class="sr-only">Next</span>
-                        </a>
-                      </div>                        
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>          
-          </section>    
-        </div>  <!-- /.content-wrapper -->
+      </div>   
+    </section>    
+  </div>  <!-- /.content-wrapper -->
   <footer class="main-footer">
     <strong>Copyright &copy; 2014-2021 <a href="#">AudioLab</a>.</strong>
     All rights reserved.
@@ -320,6 +344,20 @@ include('../../backEnd/conn.php');
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- ChartJS -->
 <script src="plugins/chart.js/Chart.min.js"></script>
+<script type="text/javascript">
+  $(function () {
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes();
+    var dateTime = date+' '+time;
+    $("#form_datetime").datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        autoclose: true,
+        todayBtn: true,
+        startDate: dateTime
+    });
+});
+</script>
 <!-- Sparkline -->
 <script src="plugins/sparklines/sparkline.js"></script>
 <!-- JQVMap -->

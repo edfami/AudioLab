@@ -29,6 +29,25 @@ if(isset($_POST['updateHis'])){
     }
 
 }
+if(isset($_POST['deleteHis'])){
+    $id = $_POST['delete_id'];
+
+    $query = "UPDATE historialmedica SET estado = 0 where idHIstorial = '$id'; ";
+    $result = $conexion->prepare($query);
+    $result->execute();
+    $data = $result->fetchAll(PDO::FETCH_ASSOC);
+    if($data == 1){
+
+        echo "<script> alert('Datos Eliminados');</script>";
+        header("Location:../frontEnd/clinica/historial_list.php");
+
+
+    }else{
+        echo "<script> alert('No se ha podido Eliminar');</script>";
+        header("Location:../frontEnd/clinica/historial_list.php");
+    }
+
+}
 
 
 
